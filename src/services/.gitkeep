@@ -1,0 +1,6 @@
+# Back-end API 호출하는 함수를 관리하는 디렉토리
+
+## Examples
+
+- services/user.js: 사용자와 관련된 API 호출 함수 모음(로그인, 로그아웃 등...)
+- services/todo.js: 할일과 관련된 API 호출 함수 모음(할일 추가, 할일 조회, 할일 수정, 할일 삭제)

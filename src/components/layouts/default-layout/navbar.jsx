@@ -18,6 +18,7 @@ import {
 import {
   Sheet,
   SheetContent,
+  SheetDescription,
   SheetHeader,
   SheetTitle,
   SheetTrigger,
@@ -26,6 +27,9 @@ import { LinkButton } from '@/components/common/button-link'
 import { ImageLink } from '@/components/common/image-link'
 import { Link } from '@/components/common/link'
 import { ThemeToggleButton } from './theme-toggle-button'
+import { useLocation } from 'react-router-dom'
+import { useMemo } from 'react'
+import { cn } from '@/lib/utils'
 
 const Navbar = ({
   logo = {
@@ -34,12 +38,25 @@ const Navbar = ({
     alt: 'Logo',
     title: 'Logo Title',
   },
-  menus = [],
+  menus = [{ title: 'Demo', to: '#' }],
   auth = {
     login: { title: 'Login', to: '#' },
     signUp: { title: 'Sign Up', to: '#' },
   },
 }) => {
+  const location = useLocation()
+
+  const computedMenus = useMemo(() => {
+    return menus.map((menu) =>
+      menu.to !== location.pathname
+        ? menu
+        : {
+            ...menu,
+            isActive: true,
+          },
+    )
+  }, [menus, location])
+
   return (
     <section className="py-4">
       <div className="container">
@@ -57,7 +74,7 @@ const Navbar = ({
             <div className="flex items-center">
               <NavigationMenu>
                 <NavigationMenuList>
-                  {menus.map((item) => renderMenuItem(item))}
+                  {computedMenus.map((item) => renderMenuItem(item))}
                 </NavigationMenuList>
               </NavigationMenu>
             </div>
@@ -99,13 +116,15 @@ const Navbar = ({
                     </SheetTitle>
                   </SheetHeader>
 
+                  <SheetDescription />
+
                   <div className="flex flex-col gap-6 p-4">
                     <Accordion
                       type="single"
                       collapsible
                       className="flex w-full flex-col gap-4"
                     >
-                      {menus.map((item) => renderMobileMenuItem(item))}
+                      {computedMenus.map((item) => renderMobileMenuItem(item))}
                     </Accordion>
 
                     <div className="flex flex-col gap-3">
@@ -148,7 +167,10 @@ const renderMenuItem = (item) => {
   return (
     <NavigationMenuItem key={item.title}>
       <NavigationMenuLink
-        className="group bg-background hover:bg-muted hover:text-accent-foreground inline-flex h-10 w-max items-center justify-center rounded-md px-4 py-2 text-sm font-medium transition-colors"
+        className={cn(
+          'group bg-background hover:bg-muted hover:text-accent-foreground inline-flex h-10 w-max items-center justify-center rounded-md px-4 py-2 text-sm font-medium transition-colors',
+          { 'bg-accent text-accent-foreground': item.isActive },
+        )}
         asChild
       >
         <Link to={item.to}>{item.title}</Link>
@@ -184,7 +206,10 @@ const renderMobileMenuItem = (item) => {
 const NavbarSubMenuLink = ({ item }) => {
   return (
     <Link
-      className="hover:bg-muted hover:text-accent-foreground flex flex-row gap-4 rounded-md p-3 leading-none no-underline transition-colors outline-none select-none"
+      className={cn(
+        'hover:bg-muted hover:text-accent-foreground flex flex-row gap-4 rounded-md p-3 leading-none no-underline transition-colors outline-none select-none',
+        { 'bg-accent text-accent-foreground': item.isActive },
+      )}
       to={item.to}
     >
       <div className="text-foreground">{item.icon}</div>

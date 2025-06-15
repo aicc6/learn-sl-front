@@ -25,6 +25,7 @@ import {
 import { LinkButton } from '@/components/common/button-link'
 import { ImageLink } from '@/components/common/image-link'
 import { Link } from '@/components/common/link'
+import { ThemeToggleButton } from './theme-toggle-button'
 
 const Navbar = ({
   logo = {
@@ -70,6 +71,8 @@ const Navbar = ({
             <LinkButton size="sm" to={auth.signUp.to}>
               {auth.signUp.title}
             </LinkButton>
+
+            <ThemeToggleButton />
           </div>
         </nav>
 
@@ -79,41 +82,45 @@ const Navbar = ({
             {/* Logo */}
             <ImageLink to={logo.to} src={logo.src} alt={logo.alt} />
 
-            <Sheet>
-              <SheetTrigger asChild>
-                <Button variant="outline" size="icon">
-                  <Menu className="size-4" />
-                </Button>
-              </SheetTrigger>
+            <div className="flex gap-2">
+              <ThemeToggleButton />
 
-              <SheetContent className="overflow-y-auto">
-                <SheetHeader>
-                  <SheetTitle>
-                    <ImageLink to={logo.to} src={logo.src} alt={logo.alt} />
-                  </SheetTitle>
-                </SheetHeader>
+              <Sheet>
+                <SheetTrigger asChild>
+                  <Button variant="outline" size="icon">
+                    <Menu className="size-4" />
+                  </Button>
+                </SheetTrigger>
 
-                <div className="flex flex-col gap-6 p-4">
-                  <Accordion
-                    type="single"
-                    collapsible
-                    className="flex w-full flex-col gap-4"
-                  >
-                    {menus.map((item) => renderMobileMenuItem(item))}
-                  </Accordion>
+                <SheetContent className="overflow-y-auto">
+                  <SheetHeader>
+                    <SheetTitle>
+                      <ImageLink to={logo.to} src={logo.src} alt={logo.alt} />
+                    </SheetTitle>
+                  </SheetHeader>
 
-                  <div className="flex flex-col gap-3">
-                    <LinkButton to={auth.login.to} variant="outline">
-                      {auth.login.title}
-                    </LinkButton>
+                  <div className="flex flex-col gap-6 p-4">
+                    <Accordion
+                      type="single"
+                      collapsible
+                      className="flex w-full flex-col gap-4"
+                    >
+                      {menus.map((item) => renderMobileMenuItem(item))}
+                    </Accordion>
 
-                    <LinkButton to={auth.signUp.to}>
-                      {auth.signUp.title}
-                    </LinkButton>
+                    <div className="flex flex-col gap-3">
+                      <LinkButton to={auth.login.to} variant="outline">
+                        {auth.login.title}
+                      </LinkButton>
+
+                      <LinkButton to={auth.signUp.to}>
+                        {auth.signUp.title}
+                      </LinkButton>
+                    </div>
                   </div>
-                </div>
-              </SheetContent>
-            </Sheet>
+                </SheetContent>
+              </Sheet>
+            </div>
           </div>
         </div>
       </div>

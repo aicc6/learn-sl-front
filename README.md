@@ -39,3 +39,8 @@ npm install
 # 개발 모드 실행
 npm run dev
 ```
+
+## 참조
+
+- [Shadcn Blocks](https://www.shadcnblocks.com)
+- [Tweakcn](https://tweakcn.com/)

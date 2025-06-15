@@ -1,7 +1,7 @@
 import { Routes, Route, BrowserRouter } from 'react-router-dom'
 
 import { DefaultLayout } from '@/components/layouts'
-import { ReactBasicPage } from '@/components/pages'
+import { ReactBasicPage, TodosPage } from '@/components/pages'
 import { GlobalStateProvider, ThemeProvider } from '@/components/providers'
 import { THEME_STORAGE_KEY } from '@/constants/theme'
 import { store } from '@/store'
@@ -15,6 +15,7 @@ const App = () => {
           <DefaultLayout>
             <Routes>
               <Route path="/" element={<ReactBasicPage />} />
+              <Route path="/todos" element={<TodosPage />} />
             </Routes>
           </DefaultLayout>
         </BrowserRouter>
